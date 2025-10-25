@@ -2,7 +2,7 @@
 
 {
     'name': "Bank Bond Management",
-    'version': '18.0',
+    'version': '17.0',
     'author': 'Muhammed Riyas',
     'category': 'Accounting',
     'license': 'LGPL-3',
@@ -19,7 +19,7 @@
         - Comprehensive reporting and audit trail
         This module helps organizations maintain financial transparency and compliance.
     """,
-    'depends': ['account_accountant', 'accountant','purchase', 'project','hr'],
+    'depends': ['account_accountant','purchase', 'project','hr'],
     "data": [
         "data/ir_sequence_data.xml",
         "data/activity.xml",
@@ -39,6 +39,7 @@
     'installable': True,
     'application': True,
     'auto_install': False,
+    'images': ['static/description/images/cover.png'],
 }
 
 
