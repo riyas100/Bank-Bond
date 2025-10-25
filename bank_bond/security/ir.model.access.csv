@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bank_bond_type_manager,bank_bond_type_manager,model_bank_bond_type,,1,1,1,1
+access_bank_bond_manager,bank_bond_manager,model_bank_bond,,1,1,1,1
+access_res_config_settings_manager,res_config_settings_manager,model_res_config_settings,,1,1,1,1
+access_res_company_manager,res_company_manager,model_res_company,,1,1,1,1
+access_bank_bond_renewal_manager,bank_bond_renewal_manager,model_bank_bond_renewal,,1,1,1,1
+access_bank_bond_interest_line_manager,bank_bond_interest_line_manager,model_bank_bond_interest_line,,1,1,1,1

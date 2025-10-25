@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="bank_bond_account_journal" model="account.journal">
+            <field name="name">Bank Bond</field>
+            <field name="code">BB</field>
+            <field name="type">general</field>
+            <field name="sequence">100</field>
+            <field name="alias_name">bank_bond</field>
+        </record>
+    </data>
+</odoo>

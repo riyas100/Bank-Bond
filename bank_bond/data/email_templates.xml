@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="bank_bond_maturity_date_followup_mail_template" model="mail.template">
+            <field name="name">Bank Bond Maturity Date Followup Mail</field>
+            <field name="model_id" ref="bank_bond.model_bank_bond"/>
+            <field name="subject">{{ object.display_name }}: Maturity Date Followup</field>
+            <!--            Reply to -->
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{ object.additional_maturity_reminder_emails}}</field>
+            <field name="partner_to">{{ object.bond_maturity_reminder_users.partner_id.ids }}</field>
+            <field name="email_cc">{{ object.get_email_cc() }}</field>
+            <field name="description">This mail is to follow up Bond maturity date</field>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333333;">
+
+                    Dear Madam/Sir,
+                    <br/>
+                    <br/>
+
+                    We would like to inform you that your bank bond
+                    <strong>
+                        <t t-out="object.display_name"/>
+                    </strong>
+                    is set to mature on <t t-out="object.maturity_date"/>. Please review your options for redemption or reinvestment at
+                    your earliest convenience.
+                </div>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang or object.beneficiary_id.lang or user.lang }}
+            </field>
+            <field name="auto_delete" eval="True"/>
+
+        </record>
+    </data>
+</odoo>

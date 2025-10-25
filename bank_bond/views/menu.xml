@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="bank_bond_main_menu"
+              name="Bank Bond"
+              parent="account.menu_finance_entries"
+              sequence="6">
+        <menuitem
+                id="bank_bond_menu"
+                name="Bank Bond"
+                action="action_bank_bond"
+                sequence="1"/>
+
+        <menuitem
+                id="bank_bond_renewal_menu"
+                name="Bank Bond Renewal"
+                action="action_bank_bond_renewal"
+                sequence="2"/>
+
+    </menuitem>
+
+    <menuitem
+            id="bank_bond_main_config_menu"
+            name="Bank Bond"
+            parent="account.menu_finance_configuration"
+            sequence="1">
+        <menuitem
+                id="bank_bond_type_menu"
+                name="Bank Bond Type"
+                action="action_bank_bond_type"
+                sequence="1"/>
+    </menuitem>
+
+
+</odoo>

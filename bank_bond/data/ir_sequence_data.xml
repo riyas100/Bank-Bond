@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_bank_bond" model="ir.sequence">
+            <field name="name">Bank Bond</field>
+            <field name="code">bank.bond</field>
+            <field name="prefix">BB</field>
+            <field name="padding">5</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="sequence_bank_bond_renewal" model="ir.sequence">
+            <field name="name">Bank Bond Renewal</field>
+            <field name="code">bank.bond.renewal</field>
+            <field name="prefix">BBR</field>
+            <field name="padding">5</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</odoo>

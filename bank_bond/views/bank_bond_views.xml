@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View bank.bond View Tree -->
+    <record id="view_bank_bond_tree" model="ir.ui.view">
+        <field name="name">view.bank.bond.tree</field>
+        <field name="model">bank.bond</field>
+        <field name="arch" type="xml">
+            <list sample="1" duplicate="0">
+                <field name="name"/>
+                <field name="bond_number"/>
+                <field name="bond_type_id"/>
+                <field name="issuance_type"/>
+                <field name="issue_date"/>
+                <field name="maturity_date"/>
+                <field name="amount"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View bank.bond form -->
+    <record id="view_bank_bond_form" model="ir.ui.view">
+        <field name="name">view.bank.bond.form</field>
+        <field name="model">bank.bond</field>
+        <field name="arch" type="xml">
+            <form string="Bank Bond" duplicate="0">
+                <header>
+                    <button name="action_set_to_draft" string="Set to Draft"
+                            invisible="state not in ['approved','rejected']"
+                            type="object"
+                    />
+                 
+
+                    <button name="action_issue_bond" string="Mark as Issued" class="oe_highlight"
+                            type="object"
+                            confirm="Are you sure?"
+                            invisible="state != 'draft'"
+                    />
+                    <button string="Post Interest" name="post_interest_line" type="object" class="oe_highlight"
+                            invisible="bond_interest_line_ids or state != 'issued'"/>
+                    <field
+                            name="state"
+                            string="State"
+                            widget="statusbar"
+                            statusbar_visible="draft,issued"
+                            statusbar_colors="{'draft':'blue','issued':'red'}"
+                    />
+         
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="general_info" string="General Information">
+                            <field name="bond_number" readonly="state != 'draft'"/>
+                            <field name="bond_type_id" readonly="state != 'draft'"/>
+                            <field name="bank_id" readonly="state != 'draft'"/>
+                            <field name="bank_partner_id" readonly="state != 'draft'"/>
+                            <field name="beneficiary_id" readonly="state != 'draft'"/>
+                            <field name="purchase_id" readonly="state != 'draft'"/>
+                            <field name="document_reference" required="not purchase_id" readonly="state != 'draft'"/>
+                            <field name="project_id" readonly="state != 'draft'"/>
+                            <field name="department_id" readonly="state != 'draft'"/>
+                            <field name="currency_id" readonly="True"/>
+                            <field name="company_id" readonly="True" invisible="True"/>
+                        
+
+                        </group>
+                        <group name="financial_details" string="Financial Details">
+                            <field name="amount" readonly="state != 'draft'"/>
+                            <field name="bank_account_id" readonly="state != 'draft'"/>
+                            <field name="bond_fee_amount" readonly="state != 'draft'"/>
+                            <field name="bond_fee_account_id" required="bond_fee_amount != 0"
+                                   readonly="state != 'draft'"
+                                   invisible="bond_fee_amount == 0"
+                                   force_save="1"/>
+                            <field name="bond_fee_counter_account_id"
+                                   readonly="state != 'draft'"
+                                   required="bond_fee_amount != 0"
+                                   invisible="bond_fee_amount == 0"
+                                   force_save="1"/>
+                            <field name="issuance_type"/>
+                            <field name="premium_bond_payable_amount"
+                                   readonly="state != 'draft'"
+                                   required="issuance_type == 'face_value_plus_premium'"
+                                   invisible="issuance_type != 'face_value_plus_premium'"
+                                   force_save="1"/>
+                            <field name="premium_bond_payable_account_id"
+                                   readonly="state != 'draft'"
+                                   required="issuance_type == 'face_value_plus_premium'"
+                                   invisible="issuance_type != 'face_value_plus_premium'"
+                                   force_save="1"/>
+                            <field name="discount_amount"
+                                   readonly="state != 'draft'"
+                                   required="issuance_type == 'with_a_discount'"
+                                   invisible="issuance_type != 'with_a_discount'" force_save="1"/>
+                            <field name="discount_account_id"
+                                   readonly="state != 'draft'"
+                                   required="issuance_type == 'with_a_discount'"
+                                   invisible="issuance_type != 'with_a_discount'" force_save="1"/>
+                            <field name="issue_date" readonly="state != 'draft'"/>
+                            <field name="maturity_date" readonly="state != 'draft'"/>
+                            <field name="bond_liability_account_id" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string=" Notifications &amp; Alerts">
+                            <field name="bond_maturity_reminder_days" readonly="state != 'draft'"/>
+                            <field name="bond_maturity_reminder_users" readonly="state != 'draft'"
+                                   widget='many2many_tags'/>
+                            <field name="additional_maturity_reminder_emails"
+                                   readonly="state != 'draft'"/>
+                            <field name="move_id" readonly="True"/>
+                        </group>
+                        <group string=" Interest Details">
+                            <field name="interest_rate" readonly="state != 'draft'"/>
+                            <field name="interest_period" readonly="state != 'draft'"/>
+                            <field name="interest_journal_id" readonly="state != 'draft'"/>
+                            <field name="interest_debit_account_id" readonly="state != 'draft'"/>
+                            <field name="interest_credit_account_id" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+    
+
+                        <page string="Interest Details" name="interest_details"
+                              invisible="not bond_interest_line_ids">
+                            <field name="bond_interest_line_ids" widget="one2many" readonly="True">
+                                <list string="Interest Details" create="0" delete="false" edit="false">
+                                    <field name="from_date"/>
+                                    <field name="to_date"/>
+                                    <field name="effective_days"/>
+                                    <field name="interest_rate"/>
+                                    <field name="interest_period"/>
+                                    <field name="interest_amount" sum="Total"/>
+                                    <field name="state" widget="badge" decoration-info="state == 'draft'"
+                                           decoration-success="state == 'posted'"/>
+                                    <field name="move_id"/>
+                                </list>
+                                <form>
+                                    <field name="move_id"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Renewal Details" name="renewal_details"
+                              invisible="not bond_renewal_ids">
+                            <field name="bond_renewal_ids" widget="one2many" readonly="True">
+                                <list string="Renewal Details" create="0" edit="0" delete="0">
+                                    <field name="bond_id" column_invisible="True"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="previous_maturity_date"/>
+                                    <field name="maturity_date"/>
+                                    <field name="state" decoration-info="state == 'draft'"
+                                           decoration-warning="state == 'submitted'"
+                                           decoration-success="state == 'done'"
+                                           decoration-primary="state == 'approved'"
+                                           decoration-danger="state == 'rejected'" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+              <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- View bank.bond search -->
+    <record id="view_bank_bond_search" model="ir.ui.view">
+        <field name="name">view.bank.bond.search</field>
+        <field name="model">bank.bond</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action bank.bond -->
+    <record id="action_bank_bond" model="ir.actions.act_window">
+        <field name="name">Bank Bond</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bank.bond</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                No Bond Records...
+            </p>
+        </field>
+    </record>
+</odoo>

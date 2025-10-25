@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="bank_bond_maturity_date_followup" model="mail.activity.type">
+        <field name="name">Bank Bond Maturity Date Followup</field>
+        <field name="res_model">bank.bond</field>
+    </record>
+</odoo>

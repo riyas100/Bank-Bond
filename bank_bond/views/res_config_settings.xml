@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.bank.bond.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="5"/>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='account']/block" position="before">
+                <block title="Bank Bond">
+                    <setting help="Notification Days Before Bond Maturity" id="bond_maturity_notification"
+                             string="Notification Days Before Bond Maturity">
+                        <field name="bond_maturity_reminder_days"/>
+                    </setting>
+                    <setting help="Notification Users" id="maturity_notification_users" string="Notification Users">
+                        <field name="bond_maturity_reminder_users" widget="many2many_tags"/>
+                    </setting>
+                    <setting help="Additional Maturity Reminder Emails" id="additional_maturity_reminder_emails"
+                             string="Additional Maturity Reminder Emails">
+                        <field name="additional_maturity_reminder_emails"
+                               placeholder="jhondoe@gmail.com, johndoe2@gmail.com,...."/>
+                    </setting>
+                 
+              
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
